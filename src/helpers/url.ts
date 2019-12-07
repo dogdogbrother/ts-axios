@@ -1,6 +1,6 @@
 import { isDate, isPlainObject } from './util'
 
-function encode (val: string): string {
+function encode(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
@@ -11,25 +11,25 @@ function encode (val: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function bulidURL (url: string, params?: any) {
+export function buildURL(url: string, params?: any) {
   // params 后面加 ? 说明了是可以选参数,是可以不传的
   // any 定义了类型,是不限制类型
   if (!params) {
-    //函数不存在就没啥可处理的了,直接return 
+    //函数不存在就没啥可处理的了,直接return
     return url
   }
 
   // 定义个装string的空数组,是用于最后遍历拼接url的
   const parts: string[] = []
 
-  Object.keys(params).forEach((key) => {
+  Object.keys(params).forEach(key => {
     // axios 里面的所有的参数都是对象形式进来的
     let val = params[key]
     if (val === null || typeof val === 'undefined') {
       // 如果这个参数的值为 null 或者 undefined 就不操作了,丢弃此值
       return
     }
-    let values: string[] 
+    let values: string[]
     // 声明一个 string 数组
 
     if (Array.isArray(val)) {
@@ -41,7 +41,7 @@ export function bulidURL (url: string, params?: any) {
       values = [val]
       // 如果不是数组就让他强行变成一位的数组,因为下面要统一遍历
     }
-    values.forEach((val) => {
+    values.forEach(val => {
       if (isDate(val)) {
         // js没有办法判断一个值是不是时间,所以 isDate 函数是我们在util工具文件里面定义的,下面会写
         val = val.toISOString()

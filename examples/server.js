@@ -10,6 +10,8 @@ const compiler = webpack(WebpackConfig)
 const router = express.Router()
 app.use(bodyParser.json())
 
+registerExtendRouter()
+
 router.get('/simple/get', function(req, res) {
   res.json({
     msg: `hello world`
@@ -54,7 +56,33 @@ router.get('/error/timeout', function(req, res) {
     })
   }, 3000)
 })
-
+function registerExtendRouter () {
+  router.get('/extend/get', function(req, res) {
+    res.json(req.query)
+  })
+  router.post('/extend/post', function(req, res) {
+    res.json(req.body)
+  })
+  router.options('/extend/options', function(req, res) {
+    res.json(req.query)
+  })
+  router.delete('/extend/delete', function(req, res) {
+    res.json(req.query)
+  })
+  router.head('/extend/head', function(req, res) {
+    res.json(req.query)
+  })
+  router.get('/extend/user', function(req, res) {
+    res.json({
+      code: 0,
+      message: 'ok',
+      result: {
+        name: 'jack',
+        age:18
+      }
+    })
+  })
+}
 
 
 app.use(router)
